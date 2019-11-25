@@ -1,0 +1,78 @@
+#
+#: name of topic in script
+#
+
+#:   multiline comments for 
+#:+  two lines
+
+
+#
+#: commenting parts of the script
+#
+
+:<<EOF
+> date
+> echo
+> ls
+> EOF
+
+#
+#: declaring and initialize associative arrray
+#
+
+declare -A   ARRAY
+ARRAY[input1]=1254
+
+declare -A ARRAY='([input1]="1254" [input2]="1254" [input3]="755" )' #: in the one line
+
+#
+#: parameter expansions
+#
+
+
+      #
+      #: substring extraction
+      #
+
+var="root@Centos_1267_abrakadabra";
+
+echo   $var  | egrep   -o  "[0-9]+";
+
+echo   $var|cut   -d_   -f2; 
+
+echo   ${var:12:4};
+
+var=${var%_*};
+var=${var#*_};
+echo "$var";
+
+#: !!best way!!
+IFS="_"; # later do not forget to unset IFS
+set --  $var
+echo $2
+unset IFS
+
+#: there is also option to use capturin with  [[ x =~ y ]]
+
+#
+#: reading first lines from parameter
+#
+
+        {
+        read trash;
+        read a;
+        } <<< "$a"
+
+
+#
+#: read external command to indexed array
+#
+
+ mapfile -t arr < <( external_command 2>/dev/null);
+ 
+#
+#: nice way to run command in the script see it in terminal + log the output and assign to variable
+#
+
+var=$( (exec 19>&1; export BASH_XTRACEFD=19;set -x; timeout 5 YOUR_COMMAND 2>&1) |tee -a $logfile;);
+
