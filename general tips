@@ -97,3 +97,36 @@ exit 1;
 #sleep 100;#DEBUG LOCK
 
 
+#
+#: example of getopts usage
+#
+
+usage() { echo "$helpVar" 1>&2; exit 1; }
+
+#: read the list of parameters
+while getopts ":i:d:x:n:" o; do
+    case "${o}" in
+        i)
+            instance=${OPTARG};
+            ;;
+        d)
+            definition_name=${OPTARG};
+            ;;
+        x)
+            operation=${OPTARG}
+            ;;
+        n)
+            node=${OPTARG}
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+if [[ -z $instance ]] || [[ -z $definition_name ]] || [[ -z $operation ]] || [[ -z $node ]];
+  then
+    usage;
+fi
+
