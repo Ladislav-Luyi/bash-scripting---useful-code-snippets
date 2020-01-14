@@ -76,3 +76,24 @@ unset IFS
 
 var=$( (exec 19>&1; export BASH_XTRACEFD=19;set -x; timeout 5 YOUR_COMMAND 2>&1) |tee -a $logfile;);
 
+#
+#: creating LOCKs
+#
+
+LOCKFILE="file.lock";
+OUTPUT_LOG='test.log';
+
+
+#: start creating and checking LOCK to prevent running more than 1 instance of the script at the same time
+
+exec 201>$LOCKFILE;
+flock -n 201 || {
+echo "$(date);$HOSTNAME;ERROR;Another instance of the script \"script_name\" is running" >> "$OUTPUT_LOG";
+exit 1;
+}
+
+#: stop creating and checking LOCK to prevent running more than 1 instance of the script at the same time
+
+#sleep 100;#DEBUG LOCK
+
+
