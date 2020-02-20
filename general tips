@@ -130,3 +130,17 @@ if [[ -z $instance ]] || [[ -z $definition_name ]] || [[ -z $operation ]] || [[ 
     usage;
 fi
 
+#
+#: simple log rotation
+#
+
+
+LOGSIZE=$(stat -c %s ${mylog} 2>/dev/null)
+if [ -f ${mylog} ]
+ then
+        if [ ${LOGSIZE} -gt 1048576 ]
+         then
+                mv ${mylog} ${mylog}.old
+        fi
+fi
+
