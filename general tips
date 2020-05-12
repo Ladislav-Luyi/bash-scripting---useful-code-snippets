@@ -1,3 +1,11 @@
+
+
+#
+#: shebang
+#
+
+#: use #!/usr/bin/env bash over #!/bin/bash
+
 #
 #: name of topic in script
 #
