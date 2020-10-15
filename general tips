@@ -152,3 +152,17 @@ if [ -f ${mylog} ]
         fi
 fi
 
+#
+#: exiting script from subshell
+#
+
+
+#!/bin/sh
+
+# fatal uses SIGUSR1 to allow clean fatal errors
+trap "exit 1" 10
+PROC=$$
+fatal(){
+  echo "$@" >&2
+  kill -10 $PROC
+}
